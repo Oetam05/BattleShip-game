@@ -52,6 +52,7 @@ class Game():
                 self.playing= False                
             self.display.fill((202, 225, 249))            
             self.check_destroyed()
+            ship_count = self.contar_barcos(self.players[self.opposite_player])
             for i in range(self.board_size):
                 for j in range(self.board_size):
                     pygame.draw.rect(self.display,(253, 124, 75), [10+j*65, 20+i*65, 64.9, 64.9], 1)
@@ -60,6 +61,10 @@ class Game():
                     elif(self.players[self.opposite_player].matriz[i][j] == self.SUCCESSFUL_SHOT):
                         self.draw_image(self.successful_shot_img, 10+65*j+32, 20+65*i+32)                                   
             self.draw_image(self.sight_img,self.mouse_position[0],self.mouse_position[1])
+            self.draw_text("Size 1    "+str(ship_count[0]), 13, self.DISPLAY_W-100, 100, self.BLACK)
+            self.draw_text("Size 2    "+str(ship_count[1]), 13, self.DISPLAY_W-100, 200, self.BLACK)
+            self.draw_text("Size 3    "+str(ship_count[2]), 13, self.DISPLAY_W-100, 300, self.BLACK)
+            self.draw_text("Size 4    "+str(ship_count[3]), 13, self.DISPLAY_W-100, 400, self.BLACK)
             self.window.blit(self.display, (0,0))
             pygame.display.update()            
             self.reset_keys()
@@ -194,7 +199,7 @@ class Game():
         return -1
 
     #Cuenta la cantidad de barcos sin destruir que quedan
-    def contar_barcos(jugador):
+    def contar_barcos(self, jugador):
         cont = [0, 0, 0, 0]
         for barco in jugador.barcos:
             if not barco.is_destroyed(): 
