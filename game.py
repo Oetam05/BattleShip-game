@@ -29,10 +29,11 @@ class Game():
         self.options = OptionsMenu(self)
         self.credits = CreditsMenu(self)
         self.input_menu = InputDataMenu(self)
+        self.endgame_menu = EndGameMenu(self)
         self.curr_menu = self.main_menu        
         self.MISSED_SHOT="-"
         self.SUCCESSFUL_SHOT="*"
-        self.players=[]
+        self.players=[0, 0]
         self.active_player=0
         self.opposite_player=1
         self.waiting=False
@@ -44,8 +45,8 @@ class Game():
 
     def game_loop(self):
         if self.playing:
-            self.players.append(Jugador(0, self.board_size, self.n_ship1, self.n_ship2, self.n_ship3, self.n_ship4))
-            self.players.append(Jugador(1, self.board_size, self.n_ship1, self.n_ship2, self.n_ship3, self.n_ship4))
+            self.players[0]=Jugador(0, self.board_size, self.n_ship1, self.n_ship2, self.n_ship3, self.n_ship4)
+            self.players[1]=Jugador(1, self.board_size, self.n_ship1, self.n_ship2, self.n_ship3, self.n_ship4)
         while self.playing:
             self.check_events()
             if self.START_KEY:
@@ -174,8 +175,9 @@ class Game():
                             if barco.is_destroyed():  # se verifica si el barco está completamente destruido
                                 barco.set_destroyed()
                                 if self.players[self.opposite_player].is_lose():
-                                    print("El jugador ganador fue ",self.active_player)
-                                    self.waiting=True                                                                                                    
+                                    print("El jugador ganador fue ",self.active_player)                                    
+                                    self.playing=False 
+                                    self.curr_menu=self.endgame_menu                                                       
                             break
                         else:
                             a = False
@@ -262,9 +264,9 @@ class Barco:
         self.orient = o
 
 class Jugador:
-    def __init__(self, nombre,board_size, n1, n2, n3, n4) -> None:        
+    def __init__(self, name,board_size, n1, n2, n3, n4) -> None:        
         self.SPACE=" "
-        self.nombre = nombre
+        self.name = name
         self.barcos = []  # arreglo de barcos del jugador
         self.board_size=board_size
         self.matriz = self.obtener_matriz()  # genera una matriz vacía para el jugador        
