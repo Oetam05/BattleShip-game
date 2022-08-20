@@ -118,10 +118,14 @@ class InputDataMenu(Menu):
         Menu.__init__(self, game)
         self.backx, self.backy=50, 30
         self.playx, self.playy=self.mid_w, self.mid_h+300
-        self.list1 = OptionBox(self.mid_w-250, self.mid_h-220, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20),["1", "2", "3", "4"])
-        self.list2 = OptionBox(self.mid_w-250, self.mid_h+150, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
-        self.list3 = OptionBox(self.mid_w+250, self.mid_h-220, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
-        self.list4 = OptionBox(self.mid_w+250, self.mid_h+150, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
+        self.list1x, self.list1y = self.mid_w-250, self.mid_h-220
+        self.list2x, self.list2y = self.mid_w+250, self.mid_h-220
+        self.list3x, self.list3y = self.mid_w-250, self.mid_h+150
+        self.list4x, self.list4y = self.mid_w+250, self.mid_h+150
+        self.list1 = OptionBox(self.list1x, self.list1y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20),["1", "2", "3", "4"])
+        self.list2 = OptionBox(self.list2x, self.list2y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
+        self.list3 = OptionBox(self.list3x, self.list3y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
+        self.list4 = OptionBox(self.list4x, self.list4y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
     def display_menu(self):
         self.run_display = True             
         
@@ -137,6 +141,11 @@ class InputDataMenu(Menu):
             self.list2.draw(self.game.display)
             self.list3.draw(self.game.display)
             self.list4.draw(self.game.display)
+            self.game.draw_text("Number of ships", 30, self.playx, 20, self.game.BLACK)
+            self.game.draw_text("Size 1", 20, self.list1x, self.list1y-35, self.game.BLACK)
+            self.game.draw_text("Size 2", 20, self.list2x, self.list2y-35, self.game.BLACK)
+            self.game.draw_text("Size 3", 20, self.list3x, self.list3y-35, self.game.BLACK)
+            self.game.draw_text("Size 4", 20, self.list4x, self.list4y-35, self.game.BLACK)
             self.game.draw_text("Back", 20, self.backx, self.backy, self.game.BLACK)
             self.game.draw_text("play", 40, self.playx, self.playy, self.game.BLACK)           
             self.blit_screen()
