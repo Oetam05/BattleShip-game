@@ -305,6 +305,7 @@ class EndGameMenu(Menu):
             self.game.draw_text("player 1 board", 20, self.mid_w/2-64, self.mid_h/2-20, self.game.BLACK)
             self.game.draw_text("player 2 board", 20, self.mid_w*1.5+32, self.mid_h/2-20, self.game.BLACK)
             self.game.draw_text("Player "+str(self.game.active_player+1) +" has won", 40, self.mid_w, 50, (127, 238, 50))
+            self.check_destroyed()
             for player in self.game.players:    
                 for i in range(self.game.board_size):
                     for j in range(self.game.board_size):
@@ -313,7 +314,6 @@ class EndGameMenu(Menu):
                             self.game.draw_image(pygame.transform.scale(self.game.missed_shot_img, (30, 30)), (50 if player.name == 0 else self.mid_w+132)+32*j+16, self.mid_h/2+32*i+16)                                        
                         elif(player.matriz[i][j] == self.game.SUCCESSFUL_SHOT):
                             self.game.draw_image(pygame.transform.scale(self.game.successful_shot_img, (30, 30)), (50 if player.name == 0 else self.mid_w+132)+32*j+16, self.mid_h/2+32*i+16)
-            
             self.blit_screen()
 
     def check_input(self):
@@ -324,35 +324,35 @@ class EndGameMenu(Menu):
                 self.game.curr_menu = self.game.main_menu
                 self.run_display = False
     
-    # def check_destroyed(self):
-    #     # Se recorren todos los barcos para ver cuales fueron destruidos y mostrarlos
-    #     for barco in self.players[self.opposite_player].barcos:
-    #         if barco.is_destroyed():
-    #             # Si es un submarino no tenemos que mirar la orientacion
-    #             if barco.tamaño == 1:
-    #                 self.draw_image(self.ship1_img, 10+65*int(barco.get_coord()[0][4])+32, 20+65*int(barco.get_coord()[0][1])+32)
-    #             # Si la orientacion es horizontal
-    #             if barco.orient == 1:
-    #                 # Si es un destructor
-    #                 if barco.tamaño == 2:
-    #                     self.draw_image(pygame.transform.rotate(self.ship2_img , 90), 10+65*(int(barco.get_coord()[0][4])+1), 53+65*int(barco.get_coord()[0][1]))                        
-    #                 # Si es un crucero
-    #                 elif barco.tamaño == 3:
-    #                     self.draw_image(pygame.transform.rotate(self.ship3_img , 90), 10+65*(int(barco.get_coord()[2][4])+1.5), 53+65*int(barco.get_coord()[2][1]))
-    #                 # Si es un portaaviones
-    #                 elif barco.tamaño == 4:
-    #                     self.draw_image(pygame.transform.rotate(self.ship4_img , 90), 10+65*(int(barco.get_coord()[2][4])+2), 53+65*int(barco.get_coord()[2][1]))                        
-    #             # Si la orientacion es vertical
-    #             elif barco.orient == 0:
-    #                 # Si es un destructor
-    #                 if barco.tamaño == 2:
-    #                     self.draw_image(self.ship2_img, 43+65*int(barco.get_coord()[0][4]), 20+65*(int(barco.get_coord()[0][1])+1))                        
-    #                 # Si es un crucero
-    #                 elif barco.tamaño == 3:
-    #                     self.draw_image(self.ship3_img, 43+65*int(barco.get_coord()[2][4]), 20+65*(int(barco.get_coord()[2][1])+1.5))
-    #                 # Si es un portaaviones
-    #                 elif barco.tamaño == 4:
-    #                     self.draw_image(self.ship4_img, 43+65*int(barco.get_coord()[2][4]), 20+65*(int(barco.get_coord()[2][1])+2))
+    def check_destroyed(self):
+        # Se recorren todos los barcos para ver cuales fueron destruidos y mostrarlos
+        for player in self.game.players:
+            for barco in player.barcos:
+                # Si es un submarino no tenemos que mirar la orientacion
+                if barco.tamaño == 1:
+                    self.game.draw_image(pygame.transform.scale(self.game.ship1_img, (30, 25)), (50 if player.name == 0 else self.mid_w+132)+32*int(barco.get_coord()[0][4])+16, self.mid_h/2+32*int(barco.get_coord()[0][1])+16)
+                # Si la orientacion es horizontal
+                if barco.orient == 1:
+                    # Si es un destructor
+                    if barco.tamaño == 2:
+                        self.game.draw_image(pygame.transform.scale(pygame.transform.rotate(self.game.ship2_img , 90), (65, 25)), (50 if player.name == 0 else self.mid_w+132)+32*(int(barco.get_coord()[0][4])+1), self.mid_h/2+32*int(barco.get_coord()[0][1])+16)                        
+                    # Si es un crucero
+                    elif barco.tamaño == 3:
+                        self.game.draw_image(pygame.transform.scale(pygame.transform.rotate(self.game.ship3_img , 90), (97, 25)), (50 if player.name == 0 else self.mid_w+132)+32*(int(barco.get_coord()[2][4])+1.5), self.mid_h/2+32*int(barco.get_coord()[2][1])+16)
+                    # Si es un portaaviones
+                    elif barco.tamaño == 4:
+                        self.game.draw_image(pygame.transform.scale(pygame.transform.rotate(self.game.ship4_img , 90), (130, 25)), (50 if player.name == 0 else self.mid_w+132)+32*(int(barco.get_coord()[2][4])+2), self.mid_h/2+32*int(barco.get_coord()[2][1])+16)                        
+                # Si la orientacion es vertical
+                elif barco.orient == 0:
+                    # Si es un destructor
+                    if barco.tamaño == 2:
+                        self.game.draw_image(pygame.transform.scale(self.game.ship2_img, (25, 60)), 43+65*int(barco.get_coord()[0][4]), 20+65*(int(barco.get_coord()[0][1])+1))                        
+                    # Si es un crucero
+                    elif barco.tamaño == 3:
+                        self.game.draw_image(pygame.transform.scale(self.game.ship3_img, (25, 90)), 43+65*int(barco.get_coord()[2][4]), 20+65*(int(barco.get_coord()[2][1])+1.5))
+                    # Si es un portaaviones
+                    elif barco.tamaño == 4:
+                        self.game.draw_image(pygame.transform.scale(self.game.ship4_img, (25, 120)), 43+65*int(barco.get_coord()[2][4]), 20+65*(int(barco.get_coord()[2][1])+2))
 
 
 
