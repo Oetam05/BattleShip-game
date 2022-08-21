@@ -346,13 +346,13 @@ class EndGameMenu(Menu):
                 elif barco.orient == 0:
                     # Si es un destructor
                     if barco.tamaño == 2:
-                        self.game.draw_image(pygame.transform.scale(self.game.ship2_img, (25, 60)), 43+65*int(barco.get_coord()[0][4]), 20+65*(int(barco.get_coord()[0][1])+1))                        
+                        self.game.draw_image(pygame.transform.scale(self.game.ship2_img, (25, 65)), (50 if player.name == 0 else self.mid_w+132)+32*int(barco.get_coord()[0][4])+16, self.mid_h/2+32*int(barco.get_coord()[0][1])+32)                   
                     # Si es un crucero
                     elif barco.tamaño == 3:
-                        self.game.draw_image(pygame.transform.scale(self.game.ship3_img, (25, 90)), 43+65*int(barco.get_coord()[2][4]), 20+65*(int(barco.get_coord()[2][1])+1.5))
+                        self.game.draw_image(pygame.transform.scale(self.game.ship3_img, (25, 97)), (50 if player.name == 0 else self.mid_w+132)+32*int(barco.get_coord()[2][4])+16, self.mid_h/2+32*int(barco.get_coord()[2][1])+48)
                     # Si es un portaaviones
                     elif barco.tamaño == 4:
-                        self.game.draw_image(pygame.transform.scale(self.game.ship4_img, (25, 120)), 43+65*int(barco.get_coord()[2][4]), 20+65*(int(barco.get_coord()[2][1])+2))
+                        self.game.draw_image(pygame.transform.scale(self.game.ship4_img, (25, 130)), (50 if player.name == 0 else self.mid_w+132)+32*int(barco.get_coord()[2][4])+16, self.mid_h/2+32*int(barco.get_coord()[2][1])+64)
 
 
 
