@@ -3,6 +3,7 @@ import time
 import threading
 import random
 from menu import *
+import os, sys
 
 
 class Game():
@@ -14,14 +15,14 @@ class Game():
         self.DISPLAY_W, self.DISPLAY_H = 1000, 680
         self.display = pygame.Surface((self.DISPLAY_W,self.DISPLAY_H))
         self.window = pygame.display.set_mode(((self.DISPLAY_W,self.DISPLAY_H)))
-        self.ship1_img= pygame.image.load("img/ship1.png")
-        self.ship2_img= pygame.image.load("img/ship2.png")
-        self.ship3_img= pygame.image.load("img/ship3.png")
-        self.ship4_img= pygame.image.load("img/ship4.png")
-        self.sight_img= pygame.image.load("img/sight.png")
-        self.successful_shot_img= pygame.image.load("img/successful_shot.png")
-        self.missed_shot_img= pygame.image.load("img/missed_shot.png")        
-        self.font_name = '8-BIT WONDER.TTF'
+        self.ship1_img= pygame.image.load(self.resource_path("img/ship1.png"))
+        self.ship2_img= pygame.image.load(self.resource_path("img/ship2.png"))
+        self.ship3_img= pygame.image.load(self.resource_path("img/ship3.png"))
+        self.ship4_img= pygame.image.load(self.resource_path("img/ship4.png"))
+        self.sight_img= pygame.image.load(self.resource_path("img/sight.png"))
+        self.successful_shot_img= pygame.image.load(self.resource_path("img/successful_shot.png"))
+        self.missed_shot_img= pygame.image.load(self.resource_path("img/missed_shot.png"))       
+        self.font_name = self.resource_path('8-BIT WONDER.TTF')
         self.mouse_position=(0,0)
         #self.font_name = pygame.font.get_default_font()
         self.BLACK, self.WHITE = (0, 0, 0), (255, 255, 255)
@@ -42,6 +43,15 @@ class Game():
         self.n_ship2=0
         self.n_ship3=0
         self.n_ship4=0
+
+    def resource_path(self, relative_path):
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
 
     def game_loop(self):
         if self.playing:

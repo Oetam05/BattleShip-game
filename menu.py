@@ -20,7 +20,7 @@ class MainMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
         self.offset = - 150
-        self.background=pygame.image.load("img/BattleShip.png")        
+        self.background=pygame.image.load(self.game.resource_path("img/BattleShip.png"))       
         self.state = "Start"
         self.startx, self.starty = self.mid_w, self.mid_h + 150
         self.optionsx, self.optionsy = self.mid_w, self.mid_h + 190
@@ -122,7 +122,7 @@ class InputDataMenu(Menu):
         self.list2x, self.list2y = self.mid_w+250, self.mid_h-220
         self.list3x, self.list3y = self.mid_w-250, self.mid_h+150
         self.list4x, self.list4y = self.mid_w+250, self.mid_h+150
-        self.list1 = OptionBox(self.list1x, self.list1y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20),["1", "2", "3", "4"])
+        self.list1 = OptionBox(self.list1x, self.list1y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20),["0", "1", "2", "3", "4"])
         self.list2 = OptionBox(self.list2x, self.list2y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
         self.list3 = OptionBox(self.list3x, self.list3y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
         self.list4 = OptionBox(self.list4x, self.list4y, 130, 30, (25, 137, 255), (100, 200, 255), pygame.font.Font(self.game.font_name,20), ["0","1", "2", "3", "4"])
@@ -157,9 +157,9 @@ class InputDataMenu(Menu):
                 if(mousex>self.backx-40 and mousex<self.backx+40 and mousey>self.backy-15 and mousey<self.backy+15):
                     self.game.curr_menu = self.game.main_menu
                     self.run_display = False
-                elif(mousex>self.playx-80 and mousex<self.playx+80 and mousey>self.playy-20 and mousey<self.playy+20):                    
+                elif(mousex>self.playx-80 and mousex<self.playx+80 and mousey>self.playy-20 and mousey<self.playy+20 and (self.list1.selected!=0 or self.list2.selected!=0 or self.list3.selected!=0 or self.list4.selected!=0)):                    
                     self.game.curr_menu=self.game.main_menu
-                    self.game.n_ship1 = self.list1.selected+1
+                    self.game.n_ship1 = self.list1.selected
                     self.game.n_ship2 = self.list2.selected
                     self.game.n_ship3 = self.list3.selected
                     self.game.n_ship4 = self.list4.selected
